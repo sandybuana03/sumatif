@@ -338,8 +338,8 @@
                 filteredSubjects = subjects.filter(subject => {
                     return (
                         subject.name.toLowerCase().includes(query) ||
-                        subject.kelas.some(kelas => kelas.toLowerCase().includes(query) ||
-                        subject.jurusan.some(jurusan => jurusan.toLowerCase().includes(query) ||
+                        subject.kelas.some(kelas => kelas.toLowerCase().includes(query)) ||
+                        subject.jurusan.some(jurusan => jurusan.toLowerCase().includes(query)) ||
                         subject.semester.toLowerCase().includes(query) ||
                         subject.jenisSumatif.toLowerCase().includes(query) ||
                         subject.tahun.toLowerCase().includes(query) ||
