@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bank Soal Sumatif Akhir Semester</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+        
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(139, 92, 246, 0.6); }
+        }
+        
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+            animation: glow 2s ease-in-out infinite;
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .slide-in {
+            animation: slideInUp 0.8s ease-out forwards;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .card-gradient {
+            background: linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.8) 100%);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+        
+        .shimmer-effect {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .animated-bg {
+            transition: background 2s ease-in-out;
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full gradient-bg font-sans animated-bg">
+  <main class="min-h-full"><!-- Header Section -->
+   <header class="text-center py-12 px-6">
+    <div class="floating">
+     <div class="inline-block bg-black bg-opacity-40 backdrop-blur-md rounded-3xl px-8 py-6 mb-4">
+      <h1 id="main-title" class="text-5xl md:text-6xl font-bold text-white mb-4 slide-in" style="animation-delay: 0.2s;">Bank Soal Sumatif Akhir Semester</h1>
+      <p id="subtitle" class="text-xl md:text-2xl text-purple-100 slide-in" style="animation-delay: 0.4s;">Kumpulan soal untuk persiapan ujian akhir semester</p>
+     </div>
+    </div>
+   </header><!-- Main Content -->
+   <section class="px-6 pb-12">
+    <div class="max-w-7xl mx-auto">
+     <div class="text-center mb-8">
+      <div class="inline-block bg-black bg-opacity-40 backdrop-blur-md rounded-2xl px-6 py-3">
+       <h2 id="section-title" class="text-3xl font-bold text-white slide-in" style="animation-delay: 0.6s;">Pilih Mata Pelajaran</h2>
+      </div>
+     </div><!-- Search Bar -->
+     <div class="max-w-md mx-auto mb-8 slide-in" style="animation-delay: 0.8s;">
+      <div class="relative"><input type="text" id="search-input" placeholder="Cari mata pelajaran atau kelas..." class="w-full px-4 py-3 pl-12 pr-4 bg-white bg-opacity-90 backdrop-blur-md border border-white border-opacity-50 rounded-full text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-300" oninput="searchSubjects()">
+       <div class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-600">
+        🔍
+       </div><button id="clear-search" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-800 transition-colors duration-200 hidden" onclick="clearSearch()"> ✕ </button>
+      </div>
+     </div><!-- Results Info -->
+     <div id="search-results-info" class="text-center mb-4 hidden">
+      <div class="inline-block bg-black bg-opacity-40 backdrop-blur-md rounded-xl px-4 py-2"><span id="results-count" class="text-white"></span>
+      </div>
+     </div>
+     <div id="subjects-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"><!-- Cards akan di-generate secara dinamis -->
+     </div><!-- No Results Message -->
+     <div id="no-results" class="text-center py-12 hidden">
+      <div class="inline-block bg-black bg-opacity-40 backdrop-blur-md rounded-3xl px-8 py-6">
+       <div class="text-6xl mb-4">
+        😔
+       </div>
+       <h3 class="text-2xl font-bold text-white mb-2">Tidak ada hasil ditemukan</h3>
+       <p class="text-purple-200">Coba kata kunci lain atau periksa ejaan Anda</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- Toast notification -->
+   <div id="toast" class="fixed top-4 right-4 glass-effect rounded-xl p-4 text-white transform translate-x-full transition-transform duration-300 z-50">
+    <div class="flex items-center space-x-3">
+     <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+      ✓
+     </div><span id="toast-message">Soal berhasil diunduh!</span>
+    </div>
+   </div>
+  </main>
+  <script>
+        const defaultConfig = {
+            main_title: "Bank Soal Sumatif Akhir Semester",
+            subtitle: "Kumpulan soal untuk persiapan ujian akhir semester",
+            section_title: "Pilih Mata Pelajaran",
+            background_color: "#667eea",
+            surface_color: "rgba(255, 255, 255, 0.1)",
+            text_color: "#ffffff",
+            primary_action_color: "#8b5cf6",
+            secondary_action_color: "#06b6d4",
+            font_family: "Inter",
+            font_size: 16
+        };
+
+        let currentSubject = '';
+        let filteredSubjects = [];
+
+        // Array warna background yang akan berganti secara random
+        const backgroundColors = [
+            { primary: '#667eea', secondary: '#764ba2' }, // Purple-Blue
+            { primary: '#f093fb', secondary: '#f5576c' }, // Pink-Red
+            { primary: '#4facfe', secondary: '#00f2fe' }, // Blue-Cyan
+            { primary: '#43e97b', secondary: '#38f9d7' }, // Green-Turquoise
+            { primary: '#fa709a', secondary: '#fee140' }, // Pink-Yellow
+            { primary: '#a8edea', secondary: '#fed6e3' }, // Mint-Pink
+            { primary: '#ff9a9e', secondary: '#fecfef' }, // Coral-Pink
+            { primary: '#a18cd1', secondary: '#fbc2eb' }, // Purple-Pink
+            { primary: '#ffecd2', secondary: '#fcb69f' }, // Peach-Orange
+            { primary: '#ff8a80', secondary: '#ffb74d' }  // Red-Orange
+        ];
+
+        // Data soal - satu card untuk satu kelas dan satu mapel
+        // Format: { id, name, icon, kelas, jurusan, topik[], gradient, buttonGradient, pdfUrl }
+        const subjects = [
+            {
+                id: 'matematika-10',
+                name: 'Matematika',
+                icon: '📊',
+                kelas: 'X',
+                jurusan: 'IPA & IPS',
+                topik: ['Aljabar', 'Geometri', 'Fungsi', 'Persamaan'],
+                gradient: 'from-pink-400 to-purple-500',
+                buttonGradient: 'from-pink-500 to-purple-600',
+                pdfUrl: 'https://example.com/soal-matematika-kelas-10.pdf'
+            },
+            {
+                id: 'matematika-11',
+                name: 'Matematika',
+                icon: '📊',
+                kelas: 'XI',
+                jurusan: 'IPA & IPS',
+                topik: ['Trigonometri', 'Limit', 'Turunan', 'Integral'],
+                gradient: 'from-pink-400 to-purple-500',
+                buttonGradient: 'from-pink-500 to-purple-600',
+                pdfUrl: 'https://example.com/soal-matematika-kelas-11.pdf'
+            },
+            {
+                id: 'fisika-10',
+                name: 'Fisika',
+                icon: '⚛️',
+                kelas: 'X',
+                jurusan: 'IPA',
+                topik: ['Besaran', 'Gerak Lurus', 'Dinamika', 'Energi'],
+                gradient: 'from-blue-400 to-cyan-500',
+                buttonGradient: 'from-blue-500 to-cyan-600',
+                pdfUrl: 'https://example.com/soal-fisika-kelas-10.pdf'
+            },
+            {
+                id: 'fisika-11',
+                name: 'Fisika',
+                icon: '⚛️',
+                kelas: 'XI',
+                jurusan: 'IPA',
+                topik: ['Fluida', 'Termodinamika', 'Gelombang', 'Optik'],
+                gradient: 'from-blue-400 to-cyan-500',
+                buttonGradient: 'from-blue-500 to-cyan-600',
+                pdfUrl: 'https://example.com/soal-fisika-kelas-11.pdf'
+            },
+            {
+                id: 'kimia-10',
+                name: 'Kimia',
+                icon: '🧪',
+                kelas: 'X',
+                jurusan: 'IPA',
+                topik: ['Atom', 'Ikatan Kimia', 'Stoikiometri', 'Larutan'],
+                gradient: 'from-green-400 to-emerald-500',
+                buttonGradient: 'from-green-500 to-emerald-600',
+                pdfUrl: 'https://example.com/soal-kimia-kelas-10.pdf'
+            },
+            {
+                id: 'biologi-10',
+                name: 'Biologi',
+                icon: '🧬',
+                kelas: 'X',
+                jurusan: 'IPA',
+                topik: ['Sel', 'Jaringan', 'Sistem Organ', 'Ekosistem'],
+                gradient: 'from-yellow-400 to-orange-500',
+                buttonGradient: 'from-yellow-500 to-orange-600',
+                pdfUrl: 'https://example.com/soal-biologi-kelas-10.pdf'
+            }
+        ];
+
+        // Generate cards dari data array
+        function generateSubjectCards(subjectsToShow = subjects) {
+            const container = document.getElementById('subjects-container');
+            const noResults = document.getElementById('no-results');
+            const resultsInfo = document.getElementById('search-results-info');
+            const resultsCount = document.getElementById('results-count');
+            
+            container.innerHTML = '';
+            
+            if (subjectsToShow.length === 0) {
+                noResults.classList.remove('hidden');
+                resultsInfo.classList.add('hidden');
+                return;
+            } else {
+                noResults.classList.add('hidden');
+            }
+            
+            // Update results info
+            const searchInput = document.getElementById('search-input');
+            if (searchInput.value.trim() !== '') {
+                resultsInfo.classList.remove('hidden');
+                resultsCount.textContent = `Ditemukan ${subjectsToShow.length} hasil untuk "${searchInput.value}"`;
+            } else {
+                resultsInfo.classList.add('hidden');
+            }
+            
+            subjectsToShow.forEach((subject, index) => {
+                const delay = 0.8 + (index * 0.1);
+                const topikBadges = subject.topik.map(topik => 
+                    `<span class="px-3 py-2 bg-white bg-opacity-30 rounded-full text-gray-800 text-sm font-medium">${topik}</span>`
+                ).join('');
+                
+                const cardHTML = `
+                    <div class="card-hover card-gradient rounded-2xl p-6 cursor-pointer slide-in" style="animation-delay: ${delay}s;" onclick="openPDF('${subject.pdfUrl}', '${subject.name}', '${subject.kelas}')">
+                        <div class="text-center">
+                            <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br ${subject.gradient} rounded-full flex items-center justify-center text-3xl">
+                                ${subject.icon}
+                            </div>
+                            <h3 class="text-3xl font-bold text-gray-800 mb-3">${subject.name}</h3>
+                            <div class="space-y-3 text-lg text-gray-700 mb-4">
+                                <p class="flex justify-between"><span>Kelas:</span> <span class="font-semibold">${subject.kelas}</span></p>
+                                <p class="flex justify-between"><span>Jurusan:</span> <span class="font-semibold">${subject.jurusan}</span></p>
+                            </div>
+                            <div class="text-sm text-gray-800 mb-5">
+                                <p class="font-medium mb-2 text-gray-700 text-base">Topik:</p>
+                                <div class="flex flex-wrap gap-2 justify-center">
+                                    ${topikBadges}
+                                </div>
+                            </div>
+                            <div class="mt-5 px-6 py-3 bg-gradient-to-r ${subject.buttonGradient} rounded-full text-white font-semibold text-lg shimmer-effect">
+                                Lihat Soal
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                container.innerHTML += cardHTML;
+            });
+        }
+
+        // Fungsi pencarian
+        function searchSubjects() {
+            const searchInput = document.getElementById('search-input');
+            const clearButton = document.getElementById('clear-search');
+            const query = searchInput.value.toLowerCase().trim();
+            
+            // Show/hide clear button
+            if (query.length > 0) {
+                clearButton.classList.remove('hidden');
+            } else {
+                clearButton.classList.add('hidden');
+            }
+            
+            if (query === '') {
+                filteredSubjects = subjects;
+            } else {
+                filteredSubjects = subjects.filter(subject => {
+                    return (
+                        subject.name.toLowerCase().includes(query) ||
+                        subject.kelas.toLowerCase().includes(query) ||
+                        subject.jurusan.toLowerCase().includes(query) ||
+                        subject.topik.some(topik => topik.toLowerCase().includes(query))
+                    );
+                });
+            }
+            
+            generateSubjectCards(filteredSubjects);
+        }
+
+        // Fungsi clear search
+        function clearSearch() {
+            const searchInput = document.getElementById('search-input');
+            const clearButton = document.getElementById('clear-search');
+            
+            searchInput.value = '';
+            clearButton.classList.add('hidden');
+            filteredSubjects = subjects;
+            generateSubjectCards(filteredSubjects);
+        }
+
+        // Fungsi untuk mengubah background secara random
+        function changeBackgroundColor() {
+            const randomColor = backgroundColors[Math.floor(Math.random() * backgroundColors.length)];
+            document.body.style.background = `linear-gradient(135deg, ${randomColor.primary} 0%, ${randomColor.secondary} 100%)`;
+        }
+
+        // Start background color animation
+        function startBackgroundAnimation() {
+            changeBackgroundColor(); // Set initial random color
+            setInterval(changeBackgroundColor, 5000); // Change every 5 seconds
+        }
+
+        function openPDF(pdfUrl, subjectName, kelas) {
+            if (pdfUrl) {
+                // Menampilkan toast notification
+                showToast(`Membuka soal ${subjectName} Kelas ${kelas}...`);
+                
+                // Buka PDF di tab baru
+                window.open(pdfUrl, '_blank', 'noopener,noreferrer');
+            } else {
+                showToast('Link soal belum tersedia');
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            toastMessage.textContent = message;
+            toast.classList.remove('translate-x-full');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-x-full');
+            }, 3000);
+        }
+
+        // Event listener untuk keyboard shortcuts (opsional)
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                // Bisa digunakan untuk menutup toast jika diperlukan
+            }
+        });
+
+        // Element SDK Implementation
+        async function onConfigChange(config) {
+            const mainTitle = document.getElementById('main-title');
+            const subtitle = document.getElementById('subtitle');
+            const sectionTitle = document.getElementById('section-title');
+            
+            if (mainTitle) {
+                mainTitle.textContent = config.main_title || defaultConfig.main_title;
+                mainTitle.style.fontFamily = `${config.font_family || defaultConfig.font_family}, Arial, sans-serif`;
+                mainTitle.style.fontSize = `${(config.font_size || defaultConfig.font_size) * 3}px`;
+                mainTitle.style.color = config.text_color || defaultConfig.text_color;
+            }
+            
+            if (subtitle) {
+                subtitle.textContent = config.subtitle || defaultConfig.subtitle;
+                subtitle.style.fontFamily = `${config.font_family || defaultConfig.font_family}, Arial, sans-serif`;
+                subtitle.style.fontSize = `${(config.font_size || defaultConfig.font_size) * 1.25}px`;
+                subtitle.style.color = config.text_color || defaultConfig.text_color;
+            }
+            
+            if (sectionTitle) {
+                sectionTitle.textContent = config.section_title || defaultConfig.section_title;
+                sectionTitle.style.fontFamily = `${config.font_family || defaultConfig.font_family}, Arial, sans-serif`;
+                sectionTitle.style.fontSize = `${(config.font_size || defaultConfig.font_size) * 1.875}px`;
+                sectionTitle.style.color = config.text_color || defaultConfig.text_color;
+            }
+            
+            // Update background
+            document.body.style.background = `linear-gradient(135deg, ${config.background_color || defaultConfig.background_color} 0%, ${config.secondary_action_color || defaultConfig.secondary_action_color} 100%)`;
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [
+                    {
+                        get: () => config.background_color || defaultConfig.background_color,
+                        set: (value) => {
+                            config.background_color = value;
+                            window.elementSdk.setConfig({ background_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.surface_color || defaultConfig.surface_color,
+                        set: (value) => {
+                            config.surface_color = value;
+                            window.elementSdk.setConfig({ surface_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.text_color || defaultConfig.text_color,
+                        set: (value) => {
+                            config.text_color = value;
+                            window.elementSdk.setConfig({ text_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.primary_action_color || defaultConfig.primary_action_color,
+                        set: (value) => {
+                            config.primary_action_color = value;
+                            window.elementSdk.setConfig({ primary_action_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+                        set: (value) => {
+                            config.secondary_action_color = value;
+                            window.elementSdk.setConfig({ secondary_action_color: value });
+                        }
+                    }
+                ],
+                borderables: [],
+                fontEditable: {
+                    get: () => config.font_family || defaultConfig.font_family,
+                    set: (value) => {
+                        config.font_family = value;
+                        window.elementSdk.setConfig({ font_family: value });
+                    }
+                },
+                fontSizeable: {
+                    get: () => config.font_size || defaultConfig.font_size,
+                    set: (value) => {
+                        config.font_size = value;
+                        window.elementSdk.setConfig({ font_size: value });
+                    }
+                }
+            };
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["main_title", config.main_title || defaultConfig.main_title],
+                ["subtitle", config.subtitle || defaultConfig.subtitle],
+                ["section_title", config.section_title || defaultConfig.section_title]
+            ]);
+        }
+
+        // Initialize Element SDK
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange,
+                mapToCapabilities,
+                mapToEditPanelValues
+            });
+        }
+
+        // Generate cards saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', function() {
+            filteredSubjects = subjects;
+            generateSubjectCards();
+            startBackgroundAnimation();
+        });
+
+        // Jika DOMContentLoaded sudah lewat, generate langsung
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
+                filteredSubjects = subjects;
+                generateSubjectCards();
+                startBackgroundAnimation();
+            });
+        } else {
+            filteredSubjects = subjects;
+            generateSubjectCards();
+            startBackgroundAnimation();
+        }
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99fe2c86c4dbba3d',t:'MTc2MzM3MTQ1NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
