@@ -285,7 +285,7 @@
             subjectsToShow.forEach((subject, index) => {
                 const delay = 0.8 + (index * 0.1);
                 const topikBadges = subject.topik.map(topik => 
-                    `<span class="px-2 sm:px-3 py-1 sm:py-2 bg-black bg-opacity-60 rounded-full text-white text-xs sm:text-sm font-medium">${topik}</span>`
+                    `<span class="px-2 sm:px-3 py-1 sm:py-2 bg-black bg-opacity-40 rounded-full text-white text-xs sm:text-sm font-medium">${topik}</span>`
                 ).join('');
                 
                 const cardHTML = `
@@ -308,7 +308,7 @@
                                     ${topikBadges}
                                 </div>
                             </div>
-                            <div class="mt-4 sm:mt-5 px-4 sm:px-6 py-2.5 sm:py-3 bg-black bg-opacity-60 rounded-full text-white font-semibold text-base sm:text-lg shimmer-effect">
+                            <div class="mt-4 sm:mt-5 px-4 sm:px-6 py-2.5 sm:py-3 bg-black bg-opacity-35 rounded-full text-white font-semibold text-base sm:text-lg shimmer-effect">
                                 Lihat Soal
                             </div>
                         </div>
