@@ -178,14 +178,14 @@
         let currentColorIndex = 0;
 
         // Data soal - satu card untuk satu kelas dan satu mapel
-        // Format: { id, name, icon, kelas, jurusan, semester, jenisSumatif, tahun, topik[], gradient, buttonGradient, pdfUrl }
+        // Format: { id, name, icon, kelas[], jurusan[], semester, jenisSumatif, tahun, topik[], gradient, buttonGradient, pdfUrl }
         const subjects = [
             {
                 id: 'informatika-sas-2025',
                 name: 'Informatika',
                 icon: '🖥️',
-                kelas: 'X',
-                jurusan: 'Teknik Mesin',
+                kelas: ['X'],
+                jurusan: ['Teknik Mesin'],
                 semester: 'Ganjil [1]',
                 jenisSumatif: 'Sumatif Akhir Semester',
                 tahun: '2025/2026',
@@ -199,8 +199,8 @@
                 id: 'kk-12rpl-sas-2025',
                 name: 'KK - Rekayasa Perangkat Lunak',
                 icon: '🌈',
-                kelas: 'XII',
-                jurusan: 'Rekayasa Perangkat Lunak',
+                kelas: ['XII'],
+                jurusan: ['Rekayasa Perangkat Lunak'],
                 semester: 'Ganjil [1]',
                 jenisSumatif: 'Sumatif Akhir Semester',
                 tahun: '2025/2026',
@@ -214,8 +214,8 @@
                 id: 'kk-11rpl-sas-2025',
                 name: 'KK - Rekayasa Perangkat Lunak',
                 icon: '🎨',
-                kelas: 'XI',
-                jurusan: 'Rekayasa Perangkat Lunak',
+                kelas: ['XI'],
+                jurusan: ['Rekayasa Perangkat Lunak'],
                 semester: 'Ganjil [1]',
                 jenisSumatif: 'Sumatif Akhir Semester',
                 tahun: '2025/2026',
@@ -338,8 +338,8 @@
                 filteredSubjects = subjects.filter(subject => {
                     return (
                         subject.name.toLowerCase().includes(query) ||
-                        subject.kelas.toLowerCase().includes(query) ||
-                        subject.jurusan.toLowerCase().includes(query) ||
+                        subject.kelas.some(kelas => kelas.toLowerCase().includes(query) ||
+                        subject.jurusan.some(jurusan => jurusan.toLowerCase().includes(query) ||
                         subject.semester.toLowerCase().includes(query) ||
                         subject.jenisSumatif.toLowerCase().includes(query) ||
                         subject.tahun.toLowerCase().includes(query) ||
