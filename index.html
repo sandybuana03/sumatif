@@ -89,7 +89,7 @@
         }
 
         .animated-bg {
-            transition: background 2s ease-in-out;
+            transition: background 4s cubic-bezier(0.4, 0, 0.2, 1);
         }
     </style>
   <style>@view-transition { navigation: auto; }</style>
@@ -161,98 +161,99 @@
         let currentSubject = '';
         let filteredSubjects = [];
 
-        // Array warna background yang akan berganti secara random
+        // Array warna background yang akan berganti secara random dengan transisi yang lebih natural
         const backgroundColors = [
-            { primary: '#667eea', secondary: '#764ba2' }, // Purple-Blue
-            { primary: '#f093fb', secondary: '#f5576c' }, // Pink-Red
-            { primary: '#4facfe', secondary: '#00f2fe' }, // Blue-Cyan
-            { primary: '#43e97b', secondary: '#38f9d7' }, // Green-Turquoise
-            { primary: '#fa709a', secondary: '#fee140' }, // Pink-Yellow
-            { primary: '#a8edea', secondary: '#fed6e3' }, // Mint-Pink
-            { primary: '#ff9a9e', secondary: '#fecfef' }, // Coral-Pink
-            { primary: '#a18cd1', secondary: '#fbc2eb' }, // Purple-Pink
-            { primary: '#ffecd2', secondary: '#fcb69f' }, // Peach-Orange
-            { primary: '#ff8a80', secondary: '#ffb74d' }  // Red-Orange
+            { primary: '#667eea', secondary: '#764ba2' }, // Purple-Blue (default)
+            { primary: '#6366f1', secondary: '#8b5cf6' }, // Indigo-Purple
+            { primary: '#3b82f6', secondary: '#06b6d4' }, // Blue-Cyan
+            { primary: '#10b981', secondary: '#059669' }, // Emerald-Green
+            { primary: '#f59e0b', secondary: '#d97706' }, // Amber-Orange
+            { primary: '#ef4444', secondary: '#dc2626' }, // Red-Crimson
+            { primary: '#ec4899', secondary: '#be185d' }, // Pink-Rose
+            { primary: '#8b5cf6', secondary: '#7c3aed' }, // Purple-Violet
+            { primary: '#06b6d4', secondary: '#0891b2' }, // Cyan-Sky
+            { primary: '#84cc16', secondary: '#65a30d' }  // Lime-Green
         ];
+
+        let currentColorIndex = 0;
 
         // Data soal - satu card untuk satu kelas dan satu mapel
         // Format: { id, name, icon, kelas, jurusan, semester, jenisSumatif, tahun, topik[], gradient, buttonGradient, pdfUrl }
         const subjects = [
             {
-                id: 'informatika-sas-2025',
-                name: 'Informatika',
-                icon: '🖥️',
-                kelas: 'X',
-                jurusan: 'Teknik Mesin',
-                semester: 'Ganjil [1]',
-                jenisSumatif: 'Sumatif Akhir Semester',
-                tahun: '2025/2026',
-                topik: ['Office', 'Excel', 'Spreadsheet'],
-                gradient: 'from-slate-500 to-blue-700',
-                buttonGradient: 'from-slate-600 to-blue-800',
-                pdfUrl: '2025/semester1/sas/SOAL INFORMATIKA X.pdf'
-            },
-            
-            {
-                id: 'kk-12rpl-sas-2025',
-                name: 'KK - Rekayasa Perangkat Lunak',
-                icon: '🌈',
-                kelas: 'XII',
-                jurusan: 'Rekayasa Perangkat Lunak',
-                semester: 'Ganjil [1]',
-                jenisSumatif: 'Sumatif Akhir Semester',
-                tahun: '2025/2026',
-                topik: ['Bootstrap', 'Landing Page', 'Web Development'],
-                gradient: 'from-fuchsia-500 to-cyan-500',
-                buttonGradient: 'from-fuchsia-600 to-cyan-600',
-                pdfUrl: '2025/semester1/sas/SOAL KK XII RPL.pdf'
-            },
-            
-            {
-                id: 'kk-11rpl-sas-2025',
-                name: 'KK - Rekayasa Perangkat Lunak',
-                icon: '🎨',
-                kelas: 'XI',
-                jurusan: 'Rekayasa Perangkat Lunak',
-                semester: 'Ganjil [1]',
-                jenisSumatif: 'Sumatif Akhir Semester',
-                tahun: '2025/2026',
-                topik: ['HTML', 'CSS', 'Landing Page'],
-                gradient: 'from-emerald-500 to-teal-600',
-                buttonGradient: 'from-emerald-600 to-teal-700',
-                pdfUrl: '2025/semester1/sas/SOAL KK XI RPL.pdf'
-            },
-            
-            {
-                id: 'mapil-webdev-sas-2025',
-                name: 'MAPIL - Web Development',
-                icon: '🕸️',
-                kelas: ['XI', 'XII'],
-                jurusan: ['RPL', 'TKJ'],
-                semester: 'Ganjil [1]',
-                jenisSumatif: 'Sumatif Akhir Semester',
-                tahun: '2025/2026',
-                topik: ['Web Development', 'Front-End', 'Landing Page'],
-                gradient: 'from-indigo-500 to-blue-600',
-                buttonGradient: 'from-indigo-600 to-blue-700',
-                pdfUrl: '2025/semester1/sas/SOAL MAPIL - WEB DEV XI XII.pdf'
-            },
-            
-            {
-                id: 'mapil-kka-sas-2025',
-                name: 'MAPIL - Koding dan Kecerdasan Artifisial',
-                icon: '🐍',
-                kelas: ['X'],
-                jurusan: ['Teknik Mesin'],
-                semester: 'Ganjil [1]',
-                jenisSumatif: 'Sumatif Akhir Semester',
-                tahun: '2025/2026',
-                topik: ['Coding', 'Pemrograman', 'Python'],
-                gradient: 'from-purple-600 to-slate-700',
-                buttonGradient: 'from-purple-700 to-slate-800',
-                pdfUrl: '2025/semester1/sas/SOAL MAPIL - KKA X TM.pdf'
-            }
-
+                 id: 'informatika-sas-2025',
+                 name: 'Informatika',
+                 icon: '🖥️',
+                 kelas: 'X',
+                 jurusan: 'Teknik Mesin',
+                 semester: 'Ganjil [1]',
+                 jenisSumatif: 'Sumatif Akhir Semester',
+                 tahun: '2025/2026',
+                 topik: ['Office', 'Excel', 'Spreadsheet'],
+                 gradient: 'from-slate-500 to-blue-700',
+                 buttonGradient: 'from-slate-600 to-blue-800',
+                 pdfUrl: '2025/semester1/sas/SOAL INFORMATIKA X.pdf'
+             },
+             
+             {
+                 id: 'kk-12rpl-sas-2025',
+                 name: 'KK - Rekayasa Perangkat Lunak',
+                 icon: '🌈',
+                 kelas: 'XII',
+                 jurusan: 'Rekayasa Perangkat Lunak',
+                 semester: 'Ganjil [1]',
+                 jenisSumatif: 'Sumatif Akhir Semester',
+                 tahun: '2025/2026',
+                 topik: ['Bootstrap', 'Landing Page', 'Web Development'],
+                 gradient: 'from-fuchsia-500 to-cyan-500',
+                 buttonGradient: 'from-fuchsia-600 to-cyan-600',
+                 pdfUrl: '2025/semester1/sas/SOAL KK XII RPL.pdf'
+             },
+             
+             {
+                 id: 'kk-11rpl-sas-2025',
+                 name: 'KK - Rekayasa Perangkat Lunak',
+                 icon: '🎨',
+                 kelas: 'XI',
+                 jurusan: 'Rekayasa Perangkat Lunak',
+                 semester: 'Ganjil [1]',
+                 jenisSumatif: 'Sumatif Akhir Semester',
+                 tahun: '2025/2026',
+                 topik: ['HTML', 'CSS', 'Landing Page'],
+                 gradient: 'from-emerald-500 to-teal-600',
+                 buttonGradient: 'from-emerald-600 to-teal-700',
+                 pdfUrl: '2025/semester1/sas/SOAL KK XI RPL.pdf'
+             },
+             
+             {
+                 id: 'mapil-webdev-sas-2025',
+                 name: 'MAPIL - Web Development',
+                 icon: '🕸️',
+                 kelas: ['XI', 'XII'],
+                 jurusan: ['RPL', 'TKJ'],
+                 semester: 'Ganjil [1]',
+                 jenisSumatif: 'Sumatif Akhir Semester',
+                 tahun: '2025/2026',
+                 topik: ['Web Development', 'Front-End', 'Landing Page'],
+                 gradient: 'from-indigo-500 to-blue-600',
+                 buttonGradient: 'from-indigo-600 to-blue-700',
+                 pdfUrl: '2025/semester1/sas/SOAL MAPIL - WEB DEV XI XII.pdf'
+             },
+             
+             {
+                 id: 'mapil-kka-sas-2025',
+                 name: 'MAPIL - Koding dan Kecerdasan Artifisial',
+                 icon: '🐍',
+                 kelas: ['X'],
+                 jurusan: ['Teknik Mesin'],
+                 semester: 'Ganjil [1]',
+                 jenisSumatif: 'Sumatif Akhir Semester',
+                 tahun: '2025/2026',
+                 topik: ['Coding', 'Pemrograman', 'Python'],
+                 gradient: 'from-purple-600 to-slate-700',
+                 buttonGradient: 'from-purple-700 to-slate-800',
+                 pdfUrl: '2025/semester1/sas/SOAL MAPIL - KKA X TM.pdf'
+             }
         ];
 
         // Generate cards dari data array
@@ -284,7 +285,7 @@
             subjectsToShow.forEach((subject, index) => {
                 const delay = 0.8 + (index * 0.1);
                 const topikBadges = subject.topik.map(topik => 
-                    `<span class="px-2 sm:px-3 py-1 sm:py-2 bg-white bg-opacity-30 rounded-full text-white text-xs sm:text-sm font-medium">${topik}</span>`
+                    `<span class="px-2 sm:px-3 py-1 sm:py-2 bg-black bg-opacity-60 rounded-full text-white text-xs sm:text-sm font-medium">${topik}</span>`
                 ).join('');
                 
                 const cardHTML = `
@@ -361,16 +362,17 @@
             generateSubjectCards(filteredSubjects);
         }
 
-        // Fungsi untuk mengubah background secara random
+        // Fungsi untuk mengubah background secara berurutan dan smooth
         function changeBackgroundColor() {
-            const randomColor = backgroundColors[Math.floor(Math.random() * backgroundColors.length)];
-            document.body.style.background = `linear-gradient(135deg, ${randomColor.primary} 0%, ${randomColor.secondary} 100%)`;
+            currentColorIndex = (currentColorIndex + 1) % backgroundColors.length;
+            const currentColor = backgroundColors[currentColorIndex];
+            document.body.style.background = `linear-gradient(135deg, ${currentColor.primary} 0%, ${currentColor.secondary} 100%)`;
         }
 
         // Start background color animation
         function startBackgroundAnimation() {
             changeBackgroundColor(); // Set initial random color
-            setInterval(changeBackgroundColor, 5000); // Change every 5 seconds
+            setInterval(changeBackgroundColor, 8000); // Change every 8 seconds
         }
 
         function openPDF(pdfUrl, subjectName, kelas) {
@@ -530,5 +532,5 @@
             startBackgroundAnimation();
         }
     </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99fe870841277e23',t:'MTc2MzM3NTE2MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99fe95563000d8ca',t:'MTc2MzM3NTc0Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
