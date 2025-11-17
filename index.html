@@ -99,9 +99,9 @@
   <main class="min-h-full"><!-- Header Section -->
    <header class="text-center py-8 sm:py-12 px-4 sm:px-6">
     <div class="floating">
-     <div class="inline-block bg-black bg-opacity-40 backdrop-blur-md rounded-2xl sm:rounded-3xl px-4 sm:px-8 py-4 sm:py-6 mb-4">
-      <h1 id="main-title" class="text-3xl sm:text-5xl md:text-6xl font-bold text-white mb-3 sm:mb-4 slide-in leading-tight" style="animation-delay: 0.2s;">Bank Soal Sumatif Akhir Semester</h1>
-      <p id="subtitle" class="text-lg sm:text-xl md:text-2xl text-purple-100 slide-in leading-relaxed" style="animation-delay: 0.4s;">Kumpulan soal untuk persiapan ujian akhir semester</p>
+     <div class="inline-block bg-black bg-opacity-40 backdrop-blur-md rounded-3xl px-8 py-6 mb-4">
+      <h1 id="main-title" class="text-5xl md:text-6xl font-bold text-white mb-4 slide-in" style="animation-delay: 0.2s;">Kumpulan Soal-Soal Sumatif</h1>
+      <p id="subtitle" class="text-xl md:text-2xl text-purple-100 slide-in" style="animation-delay: 0.4s;">Sebagai Bentuk Penilaian Siswa Selama Belajar</p>
      </div>
     </div>
    </header><!-- Main Content -->
@@ -181,88 +181,78 @@
         // Format: { id, name, icon, kelas, jurusan, semester, jenisSumatif, tahun, topik[], gradient, buttonGradient, pdfUrl }
         const subjects = [
             {
-                id: 'matematika-10',
-                name: 'Matematika',
-                icon: '📊',
+                id: 'informatika-sas-2025',
+                name: 'Informatika',
+                icon: '🖥️',
                 kelas: 'X',
-                jurusan: 'IPA & IPS',
-                semester: 'Ganjil',
-                jenisSumatif: 'Akhir Semester',
-                tahun: '2024/2025',
-                topik: ['Aljabar', 'Geometri', 'Fungsi', 'Persamaan'],
-                gradient: 'from-pink-400 to-purple-500',
-                buttonGradient: 'from-pink-500 to-purple-600',
-                pdfUrl: 'https://example.com/soal-matematika-kelas-10.pdf'
+                jurusan: 'Teknik Mesin',
+                semester: 'Ganjil [1]',
+                jenisSumatif: 'Sumatif Akhir Semester',
+                tahun: '2025/2026',
+                topik: ['Office', 'Excel', 'Spreadsheet'],
+                gradient: 'transparent',
+                buttonGradient: 'from-red-700 to-red-900',  
+                pdfUrl: '2025/semester1/sas/SOAL INFORMATIKA X.pdf'
             },
+
             {
-                id: 'matematika-11',
-                name: 'Matematika',
-                icon: '📊',
+                id: 'kk-12rpl-sas-2025',
+                name: 'KK - Rekayasa Perangkat Lunak',
+                icon: '🌈',
+                kelas: 'XII',
+                jurusan: 'Rekayasa Perangkat Lunak',
+                semester: 'Ganjil [1]',
+                jenisSumatif: 'Sumatif Akhir Semester',
+                tahun: '2025/2026',
+                topik: ['Bootstrap', 'Landing Page', 'Web Development'],
+                gradient: 'transparent',
+                buttonGradient: 'from-amber-600 to-amber-800', 
+                pdfUrl: '2025/semester1/sas/SOAL KK XII RPL.pdf'
+            },
+
+            {
+                id: 'kk-11rpl-sas-2025',
+                name: 'KK - Rekayasa Perangkat Lunak',
+                icon: '🎨',
                 kelas: 'XI',
-                jurusan: 'IPA & IPS',
-                semester: 'Genap',
-                jenisSumatif: 'Akhir Semester',
-                tahun: '2024/2025',
-                topik: ['Trigonometri', 'Limit', 'Turunan', 'Integral'],
-                gradient: 'from-pink-400 to-purple-500',
-                buttonGradient: 'from-pink-500 to-purple-600',
-                pdfUrl: 'https://example.com/soal-matematika-kelas-11.pdf'
+                jurusan: 'Rekayasa Perangkat Lunak',
+                semester: 'Ganjil [1]',
+                jenisSumatif: 'Sumatif Akhir Semester',
+                tahun: '2025/2026',
+                topik: ['HTML', 'CSS', 'Landing Page'],
+                gradient: 'transparent',
+                buttonGradient: 'from-emerald-600 to-emerald-800', 
+                pdfUrl: '2025/semester1/sas/SOAL KK XI RPL.pdf'
             },
+
             {
-                id: 'fisika-10',
-                name: 'Fisika',
-                icon: '⚛️',
-                kelas: 'X',
-                jurusan: 'IPA',
-                semester: 'Ganjil',
-                jenisSumatif: 'Tengah Semester',
-                tahun: '2024/2025',
-                topik: ['Besaran', 'Gerak Lurus', 'Dinamika', 'Energi'],
-                gradient: 'from-blue-400 to-cyan-500',
-                buttonGradient: 'from-blue-500 to-cyan-600',
-                pdfUrl: 'https://example.com/soal-fisika-kelas-10.pdf'
+                id: 'mapil-webdev-sas-2025',
+                name: 'MAPIL - Web Development',
+                icon: '🕸️',
+                kelas: ['XI', 'XII'],
+                jurusan: ['RPL', 'TKJ'],
+                semester: 'Ganjil [1]',
+                jenisSumatif: 'Sumatif Akhir Semester',
+                tahun: '2025/2026',
+                topik: ['Web Development', 'Front-End', 'Landing Page'],
+                gradient: 'transparent',
+                buttonGradient: 'from-blue-700 to-blue-900', 
+                pdfUrl: '2025/semester1/sas/SOAL MAPIL - WEB DEV XI XII.pdf'
             },
+
             {
-                id: 'fisika-11',
-                name: 'Fisika',
-                icon: '⚛️',
-                kelas: 'XI',
-                jurusan: 'IPA',
-                semester: 'Genap',
-                jenisSumatif: 'Akhir Tahun',
-                tahun: '2024/2025',
-                topik: ['Fluida', 'Termodinamika', 'Gelombang', 'Optik'],
-                gradient: 'from-blue-400 to-cyan-500',
-                buttonGradient: 'from-blue-500 to-cyan-600',
-                pdfUrl: 'https://example.com/soal-fisika-kelas-11.pdf'
-            },
-            {
-                id: 'kimia-10',
-                name: 'Kimia',
-                icon: '🧪',
-                kelas: 'X',
-                jurusan: 'IPA',
-                semester: 'Ganjil',
-                jenisSumatif: 'Akhir Semester',
-                tahun: '2024/2025',
-                topik: ['Atom', 'Ikatan Kimia', 'Stoikiometri', 'Larutan'],
-                gradient: 'from-green-400 to-emerald-500',
-                buttonGradient: 'from-green-500 to-emerald-600',
-                pdfUrl: 'https://example.com/soal-kimia-kelas-10.pdf'
-            },
-            {
-                id: 'biologi-10',
-                name: 'Biologi',
-                icon: '🧬',
-                kelas: 'X',
-                jurusan: 'IPA',
-                semester: 'Genap',
-                jenisSumatif: 'Akhir Semester',
-                tahun: '2024/2025',
-                topik: ['Sel', 'Jaringan', 'Sistem Organ', 'Ekosistem'],
-                gradient: 'from-yellow-400 to-orange-500',
-                buttonGradient: 'from-yellow-500 to-orange-600',
-                pdfUrl: 'https://example.com/soal-biologi-kelas-10.pdf'
+                id: 'mapil-kka-sas-2025',
+                name: 'MAPIL - Koding dan Kecerdasan Artifisial',
+                icon: '🐍',
+                kelas: ['X'],
+                jurusan: ['Teknik Mesin'],
+                semester: 'Ganjil [1]',
+                jenisSumatif: 'Sumatif Akhir Semester',
+                tahun: '2025/2026',
+                topik: ['Coding', 'Pemrograman', 'Python'],
+                gradient: 'transparent',
+                buttonGradient: 'from-gray-600 to-gray-800',   
+                pdfUrl: '2025/semester1/sas/SOAL MAPIL - KKA X TM.pdf'
             }
         ];
 
